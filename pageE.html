@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question h2 {
+            font-size: 18px;
+        }
+        .submit-btn, .reset-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .submit-btn:hover, .reset-btn:hover {
+            background-color: #45a049;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>20-Question Quiz</h1>
+
+    <form id="quizForm">
+        <!-- Question 1 -->
+        <div class="question">
+            <h2>1. What is the capital of France?</h2>
+            <label><input type="radio" name="q1" value="London"> London</label><br>
+            <label><input type="radio" name="q1" value="Paris"> Paris</label><br>
+            <label><input type="radio" name="q1" value="Berlin"> Berlin</label><br>
+            <label><input type="radio" name="q1" value="Rome"> Rome</label>
+            <div class="feedback" id="feedback1"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question">
+            <h2>2. Who wrote "Hamlet"?</h2>
+            <label><input type="radio" name="q2" value="Charles Dickens"> Charles Dickens</label><br>
+            <label><input type="radio" name="q2" value="William Shakespeare"> William Shakespeare</label><br>
+            <label><input type="radio" name="q2" value="J.K. Rowling"> J.K. Rowling</label><br>
+            <label><input type="radio" name="q2" value="George Orwell"> George Orwell</label>
+            <div class="feedback" id="feedback2"></div>
+        </div>
+
+        <!-- Additional questions (up to 20) -->
+        <div class="question">
+            <h2>3. What is the chemical symbol for water?</h2>
+            <label><input type="radio" name="q3" value="H2O"> H₂O</label><br>
+            <label><input type="radio" name="q3" value="O2"> O₂</label><br>
+            <label><input type="radio" name="q3" value="CO2"> CO₂</label><br>
+            <label><input type="radio" name="q3" value="HO2"> HO₂</label>
+            <div class="feedback" id="feedback3"></div>
+        </div>
+
+        <!-- Keep adding questions up to 20 in this format -->
+        <!-- Example: -->
+        <div class="question">
+            <h2>4. Which planet is known as the Red Planet?</h2>
+            <label><input type="radio" name="q4" value="Venus"> Venus</label><br>
+            <label><input type="radio" name="q4" value="Mars"> Mars</label><br>
+            <label><input type="radio" name="q4" value="Jupiter"> Jupiter</label><br>
+            <label><input type="radio" name="q4" value="Saturn"> Saturn</label>
+            <div class="feedback" id="feedback4"></div>
+        </div>
+
+        <!-- Continue for all 20 questions -->
+
+        <button type="button" class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+        <button type="button" class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        // Correct answers
+        const answers = {
+            q1: 'Paris',
+            q2: 'William Shakespeare',
+            q3: 'H2O',
+            q4: 'Mars',
+            // Add correct answers for remaining questions up to q20
+        };
+
+        function submitQuiz() {
+            let score = 0;
+            const form = document.getElementById('quizForm');
+            let resultHTML = '';
+            
+            for (let key in answers) {
+                const userAnswer = form[key].value;
+                const feedback = document.getElementById('feedback' + key.slice(1));
+
+                if (userAnswer === answers[key]) {
+                    score++;
+                    feedback.style.color = 'green';
+                    feedback.innerHTML = 'Correct!';
+                } else {
+                    feedback.style.color = 'red';
+                    feedback.innerHTML = `Wrong! The correct answer is ${answers[key]}.`;
+                }
+            }
+
+            resultHTML = `<h2>Your score: ${score}/20</h2>`;
+            document.getElementById('result').innerHTML = resultHTML;
+        }
+
+        function resetQuiz() {
+            const form = document.getElementById('quizForm');
+            form.reset();
+            document.getElementById('result').innerHTML = '';
+            // Clear feedback for each question
+            for (let key in answers) {
+                const feedback = document.getElementById('feedback' + key.slice(1));
+                feedback.innerHTML = '';
+            }
+        }
+    </script>
+</body>
+</html>
